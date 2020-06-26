@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}My blog - publications{% endblock %}
+
+{% block content %}
+
+    <h2>Добавить отзыв</h2>
+
+    <p style="color: red">{{ error }}</p>
+
+    <form method="post" action="/feedback/">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Пользователь" />
+        <br /><br />
+        <textarea name="text" placeholder="Текст"></textarea>
+        <br />
+        <input type="submit" value="Опубликовать" />
+    <br /><br />
+
+        <h2>Список отзывов</h2>
+            <table>
+                <tr>
+                    <td>Имя</td>
+                    <td>Дата</td>
+                    <td>Отзыв</td>
+                </tr>
+                {% for oneFeedback in feedbackCol %}
+                <tr>
+                    <td>{{ oneFeedback.name }}</td>
+                    <td>{{ oneFeedback.date }}</td>
+                    <td>{{ oneFeedback.text }}</td>
+                {% endfor %}
+
+            </table>
+    </form>
+
+{% endblock %}

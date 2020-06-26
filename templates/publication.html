@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}My blog - {{ name }}{% endblock %}
+
+{% block content %}
+    <h2>Публикация "{{ publication.name }}"</h2>
+    <p>{{ publication.date }}</p>
+    <p>{{ publication.text|safe }}</p>
+
+    <h2>Добавить свой комментарий</h2>
+
+    <p style="color: red">{{ error }}</p>
+
+    <form method="post" action="/comment/{{ publication.id }}">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Имя комментирующего" />
+        <br /><br />
+        <textarea name="text" placeholder="Текст комментария"></textarea>
+        <br />
+        <input type="submit" value="Опубликовать" />
+    </form>
+
+    <h2>Комментарии: </h2>
+    <table>
+        <tr>
+            <td>Имя</td>
+            <td>Текст</td>
+        </tr>
+    {% for oneComment in publication.comments %}
+        <tr>
+            <td>{{ oneComment.name }}</td>
+            <td>{{ oneComment.text }}</td>
+        </tr>
+    {% endfor %}
+
+
+{% endblock %}
